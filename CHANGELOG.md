@@ -1,5 +1,11 @@
 # Changelog - Badger Components React
 
+## 0.12.0 (April 15, 2020)
+
+* Add `sizeQR` prop to `BadgerButton` and `BadgerBadge`
+* Better invoice success function handling
+* Correct bug in `logoQR` implementation
+
 ## 0.11.0 (April 9, 2020)
 
 * Adds support for new prop, `logoQR`, can be set to "SLP" or "BCH" for a new QR code style in BadgerBadge or BadgerButton

@@ -48,6 +48,7 @@ storiesOf('BadgerBadge', module)
 				successFn={() => console.log('success')}
 				failFn={() => console.log('fail')}
 				logoQR={text('logoQR', '')}
+				sizeQR={number('QR Code Size', 125)}
 			/>
 		),
 		{
