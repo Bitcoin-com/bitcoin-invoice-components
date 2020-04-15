@@ -17,7 +17,7 @@ import {
 	constants,
 	sendAssets,
 	payInvoice,
-} from 'bitcoin-wallet-api';
+} from 'bitcoincom-link';
 const { WalletProviderStatus } = constants;
 
 import { type CurrencyCode } from '../../utils/currency-helpers';
@@ -373,6 +373,8 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 			ws.onmessage = (evt) => {
 				// listen to data sent from the websocket server
 				const invoiceInfo = JSON.parse(evt.data);
+				//console.log(`invoiceInfo:`);
+				//console.log(invoiceInfo);
 
 				const invoiceStatus = invoiceInfo.status; // for InvoiceDisplay
 
@@ -380,7 +382,9 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 				this.setupCoinMeta(invoiceInfo);
 
 				if (invoiceStatus === 'paid') {
-					successFn && successFn();
+					const txid = invoiceInfo.txId;
+					console.log(`Invoice paid with txid ${txid}`);
+					successFn && successFn(txid);
 					return this.paymentSendSuccess();
 				}
 				if (invoiceStatus === 'expired') {

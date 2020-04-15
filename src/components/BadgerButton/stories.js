@@ -38,6 +38,7 @@ storiesOf('BadgerButton', module)
 				successFn={() => console.log('success example function called')}
 				failFn={() => console.log('fail example function called')}
 				logoQR={text('logoQR', '')}
+				sizeQR={number('QR Code Size', 125)}
 			/>
 		),
 		{
