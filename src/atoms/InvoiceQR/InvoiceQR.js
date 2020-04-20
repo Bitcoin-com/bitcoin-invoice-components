@@ -28,7 +28,6 @@ const Main = styled.div`
 
 const QRCodeWrapper = styled.div`
 	padding: 12px 12px 9px;
-	border: 1px solid ${colors.fg500};
 	border-radius: 5px 5px 0 0;
 	border-bottom: none;
 	background-color: white;
@@ -40,28 +39,6 @@ const QRCodeWrapper = styled.div`
 const A = styled.a`
 	color: inherit;
 	text-decoration: none;
-`;
-
-const ButtonElement = styled.button`
-	cursor: pointer;
-	border: none;
-	position: relative;
-	border-radius: 0 0 5px 5px;
-	outline: none;
-	background-color: ${colors.brand500};
-	border-right: 1px solid ${colors.fg500};
-	border-left: 1px solid ${colors.fg500};
-	border-bottom: 1px solid ${colors.fg500};
-	padding: 12px 20px;
-	color: ${colors.bg100};
-	&:hover {
-		background-color: ${colors.brand500};
-		color: ${colors.bg100};
-	}
-	&:active {
-		background-color: ${colors.brand700};
-		color: ${colors.bg100};
-	}
 `;
 
 const cover = css`
@@ -99,25 +76,6 @@ const ExpiredCover = styled.div`
 	background-color: ${colors.expired500};
 `;
 
-const LoginCover = styled.div`
-	${cover};
-	font-size: 16px;
-	border-color: ${colors.pending700};
-	background-color: ${colors.pending500};
-`;
-
-const WarningCover = styled.div`
-	${cover};
-	font-size: 16px;
-	border-color: ${colors.brand700};
-	background-color: ${colors.brand500};
-	cursor: pointer;
-	&:active {
-		background-color: ${colors.brand700};
-		color: ${colors.bg100};
-	}
-`;
-
 const spinAnimation = keyframes`
     from {transform:rotate(0deg);}
     to {transform:rotate(360deg);}
@@ -132,19 +90,33 @@ const PendingSpinner = styled.div`
 	justify-content: center;
 `;
 
+export const DesktopCover = styled.div`
+	@media screen and (max-width: 768px) {
+		display: none;
+	}
+	position: absolute;
+	border-radius: 5px;
+	top: 12px;
+	left: 12px;
+	z-index: 2;
+	background-color: transparent;
+`;
+
 type Props = {
 	step: ButtonStates,
 	children: React.Node,
 	toAddress: string,
 	amountSatoshis: ?number,
 	sizeQR: number,
-	paymentRequestUrl?: string,
-	logoQR?: string,
+	paymentRequestUrl: string,
+	coinSymbol: string,
 };
 
-class ButtonQR extends React.PureComponent<Props> {
+class InvoiceQR extends React.PureComponent<Props> {
 	static defaultProps = {
 		sizeQR: 125,
+		paymentRequestUrl: 'https://pleaseEnterBip70Url/',
+		coinSymbol: null,
 	};
 
 	render() {
@@ -155,7 +127,7 @@ class ButtonQR extends React.PureComponent<Props> {
 			amountSatoshis,
 			sizeQR,
 			paymentRequestUrl,
-			logoQR,
+			coinSymbol,
 		} = this.props;
 
 		const widthQR = sizeQR >= 125 ? sizeQR : 125; // Minimum width 125
@@ -201,13 +173,15 @@ class ButtonQR extends React.PureComponent<Props> {
 					)}
 
 					<QRCodeWrapper>
+						<DesktopCover style={{ width: widthQR, height: widthQR + 4 }} />
 						<a href={uri}>
-							{logoQR ? (
+							{coinSymbol === 'BCH' ? (
 								<QRCode
 									value={uri}
 									size={widthQR}
+									renderAs={'svg'}
 									imageSettings={{
-										src: logoQR === 'SLP' ? slpLogo : bchLogo,
+										src: bchLogo,
 										x: null,
 										y: null,
 										height: 67,
@@ -216,33 +190,14 @@ class ButtonQR extends React.PureComponent<Props> {
 									}}
 								/>
 							) : (
-								<QRCode value={uri} size={widthQR} />
+								<QRCode value={uri} size={widthQR} renderAs={'svg'} />
 							)}
 						</a>
 					</QRCodeWrapper>
-
-					<ButtonElement disabled={!isFresh} isFresh={isFresh} {...this.props}>
-						{children}
-
-						{isLogin && (
-							<LoginCover>
-								<Text>Login to Badger</Text>
-							</LoginCover>
-						)}
-						{isInstall && (
-							<WarningCover>
-								<Text>
-									<A href="https://badger.bitcoin.com" target="_blank">
-										Install Badger & refresh
-									</A>
-								</Text>
-							</WarningCover>
-						)}
-					</ButtonElement>
 				</Main>
 			</Wrapper>
 		);
 	}
 }
 
-export default ButtonQR;
+export default InvoiceQR;

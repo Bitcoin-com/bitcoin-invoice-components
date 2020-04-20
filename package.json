@@ -69,7 +69,8 @@
     "bignumber.js": "^9.0.0",
     "bitcoincom-link": "^0.1.10",
     "lodash": "^4.17.15",
-    "qrcode.react": "^0.9.3",
-    "react-qrcode-logo": "^2.2.1"
+    "qrcode.react": "^1.0.0",
+    "react-circular-progressbar": "^2.0.3",
+    "react-copy-to-clipboard": "^5.0.2"
   }
 }
