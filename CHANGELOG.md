@@ -1,5 +1,8 @@
 # Changelog - Badger Components React
 
+## 0.14.0 (April 20, 2020)
+* Correcting export error in `Invoice` component
+
 ## 0.13.0 (April 20, 2020)
 
 * Added component `Invoice` for BCH BIP70 invoices
