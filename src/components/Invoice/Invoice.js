@@ -11,20 +11,14 @@ import {
 
 import { type CurrencyCode } from '../../utils/currency-helpers';
 
-import BitcoinCashImage from '../../images/bitcoin-cash.svg';
-import SLPLogoImage from '../../images/slp-logo.png';
-
 import BadgerBase, {
 	type ButtonStates,
 	type BadgerBaseProps,
 	type ValidCoinTypes,
 } from '../../hoc/BadgerBase';
 
-import PriceDisplay from '../PriceDisplay';
 import InvoiceTimer from '../InvoiceTimer';
-
 import InvoiceQR from '../../atoms/InvoiceQR';
-import Small from '../../atoms/Small';
 
 import {
 	Wrapper,
@@ -35,7 +29,7 @@ import {
 	CopyButton,
 } from './styled';
 
-// Badger Button Props
+// Invoice Props
 type Props = BadgerBaseProps & {
 	coinSymbol: string,
 	coinDecimals?: number,
@@ -81,17 +75,13 @@ class Invoice extends React.PureComponent<Props, State> {
 			handleClick,
 
 			currency,
-			price,
 
-			coinType,
 			coinSymbol,
 			coinDecimals,
-			coinName,
 
 			amount,
 			paymentRequestUrl,
 
-			invoiceInfo,
 			invoiceTimeLeftSeconds,
 			invoiceFiat,
 
@@ -100,42 +90,6 @@ class Invoice extends React.PureComponent<Props, State> {
 		} = this.props;
 		const { uriCopied } = this.state;
 
-		const CoinImage = coinType === 'BCH' ? BitcoinCashImage : SLPLogoImage;
-
-		// buttonPriceDisplay -- handle different cases for BIP70 invoices
-
-		// buttonPriceDisplay if no price, or if a bip70 invoice is set from a server without supported websocket updates
-		let buttonPriceDisplay = <p>Badger Pay</p>;
-
-		// buttonPriceDisplay of price set in props and no invoice is set
-		if (price && !paymentRequestUrl) {
-			buttonPriceDisplay = (
-				<p>
-					{getCurrencyPreSymbol(currency)} {formatPriceDisplay(price)}
-					<Small> {currency}</Small>
-				</p>
-			);
-			// buttonPriceDisplay if valid bip70 invoice with price information is available
-		} else if (paymentRequestUrl && invoiceFiat != undefined) {
-			buttonPriceDisplay = (
-				<p>
-					{getCurrencyPreSymbol(currency)} {formatPriceDisplay(invoiceFiat)}
-					<Small> {currency}</Small>
-				</p>
-			);
-		}
-
-		let determinedShowAmount = (
-			<PriceDisplay
-				coinType={coinType}
-				price={formatAmount(amount, coinDecimals)}
-				symbol={coinSymbol}
-				name={coinName}
-			/>
-		);
-		if (paymentRequestUrl && !invoiceInfo.currency) {
-			determinedShowAmount = <p>BIP70 Invoice</p>;
-		}
 		return (
 			<React.Fragment>
 				<Wrapper>

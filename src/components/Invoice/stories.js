@@ -28,15 +28,13 @@ storiesOf('Invoice', module)
 		'default',
 		() => (
 			<Invoice
-				price={number('Price', 0.0025)}
-				currency={select('Currency', currencyOptions, 'USD')}
-				to={text(
-					'To Address',
-					'bitcoincash:pp8skudq3x5hzw8ew7vzsw8tn4k8wxsqsv0lt0mf3g'
+				paymentRequestUrl={text(
+					'Invoice URL',
+					//'https://yourInvoiceUrlHere.com/String'
+					'https://pay.bitcoin.com/i/EW7ctYT2L88sY9RVfftmXQ'
 				)}
 				successFn={() => console.log('success example function called')}
 				failFn={() => console.log('fail example function called')}
-				logoQR={text('logoQR', '')}
 				sizeQR={number('QR Code Size', 200)}
 			/>
 		),

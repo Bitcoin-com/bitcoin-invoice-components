@@ -114,7 +114,7 @@ type Props = {
 
 class InvoiceQR extends React.PureComponent<Props> {
 	static defaultProps = {
-		sizeQR: 125,
+		sizeQR: 200,
 		paymentRequestUrl: 'https://pleaseEnterBip70Url/',
 		coinSymbol: null,
 	};
@@ -130,7 +130,7 @@ class InvoiceQR extends React.PureComponent<Props> {
 			coinSymbol,
 		} = this.props;
 
-		const widthQR = sizeQR >= 125 ? sizeQR : 125; // Minimum width 125
+		const widthQR = sizeQR >= 200 ? sizeQR : 200; // Minimum width 200
 
 		// QR code source
 		const uriBase = toAddress;
@@ -150,6 +150,11 @@ class InvoiceQR extends React.PureComponent<Props> {
 		const isExpired = step === 'expired';
 		const isLogin = step === 'login';
 		const isInstall = step === 'install';
+
+		let logoSize = Math.round(sizeQR);
+		if (logoSize > 66) {
+			logoSize = 66;
+		}
 
 		return (
 			<Wrapper>
@@ -180,12 +185,13 @@ class InvoiceQR extends React.PureComponent<Props> {
 									value={uri}
 									size={widthQR}
 									renderAs={'svg'}
+									level="M"
 									imageSettings={{
 										src: bchLogo,
 										x: null,
 										y: null,
-										height: 67,
-										width: 67,
+										height: logoSize,
+										width: logoSize,
 										excavate: false,
 									}}
 								/>
