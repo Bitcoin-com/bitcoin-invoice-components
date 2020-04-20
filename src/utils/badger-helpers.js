@@ -38,7 +38,7 @@ const formatPriceDisplay = (price: ?number): ?number => {
 			})
 			.slice(1);
 	} else {
-		return +price.toFixed(5);
+		return +price.toFixed(2);
 	}
 };
 

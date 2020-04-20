@@ -1,5 +1,22 @@
 # Changelog - Badger Components React
 
+## 0.16.0 (April 20, 2020)
+* NPM-appropriate docs
+
+## 0.15.0 (April 20, 2020)
+* Removed all legacy Badger components, invoice components will only be for BIP70
+* Corrected bug in QR code URI for invoices
+* Better logo sizing
+
+## 0.14.0 (April 20, 2020)
+* Correcting export error in `Invoice` component
+
+## 0.13.0 (April 20, 2020)
+
+* Added component `Invoice` for BCH BIP70 invoices
+* Better QR codes and logo QR codes
+* Hide `bitcoincash:` link over QR code for desktop devices
+
 ## 0.12.0 (April 15, 2020)
 
 * Add `sizeQR` prop to `BadgerButton` and `BadgerBadge`

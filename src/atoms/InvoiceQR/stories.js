@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { storiesOf } from '@storybook/react/dist/client/preview';
 import { select, text, boolean, number } from '@storybook/addon-knobs';
 
-import ButtonQR from './ButtonQR';
+import InvoiceQR from './InvoiceQR';
 import Text from '../Text';
 
 const ButtonText = 'Badger Pay';
@@ -15,11 +15,11 @@ const props = {
 	amountSatoshis: 550,
 };
 
-storiesOf('ButtonQR', module)
+storiesOf('InvoiceQR', module)
 	.add(
 		'default - all knobs',
 		() => (
-			<ButtonQR
+			<InvoiceQR
 				toAddress={text(
 					'To address',
 					'bitcoincash:pp8skudq3x5hzw8ew7vzsw8tn4k8wxsqsv0lt0mf3g'
@@ -30,7 +30,7 @@ storiesOf('ButtonQR', module)
 				logoQR={text('logoQR', '')}
 			>
 				<Text>{ButtonText}</Text>
-			</ButtonQR>
+			</InvoiceQR>
 		),
 		{
 			notes:
@@ -40,7 +40,7 @@ storiesOf('ButtonQR', module)
 	.add(
 		'BCH Logo QR - all knobs',
 		() => (
-			<ButtonQR
+			<InvoiceQR
 				toAddress={text(
 					'To address',
 					'bitcoincash:pp8skudq3x5hzw8ew7vzsw8tn4k8wxsqsv0lt0mf3g'
@@ -51,7 +51,7 @@ storiesOf('ButtonQR', module)
 				logoQR={text('logoQR', 'BCH')}
 			>
 				<Text>{ButtonText}</Text>
-			</ButtonQR>
+			</InvoiceQR>
 		),
 		{
 			notes:
@@ -61,7 +61,7 @@ storiesOf('ButtonQR', module)
 	.add(
 		'SLP Logo QR - all knobs',
 		() => (
-			<ButtonQR
+			<InvoiceQR
 				toAddress={text(
 					'To address',
 					'bitcoincash:pp8skudq3x5hzw8ew7vzsw8tn4k8wxsqsv0lt0mf3g'
@@ -72,7 +72,7 @@ storiesOf('ButtonQR', module)
 				logoQR={text('logoQR', 'SLP')}
 			>
 				<Text>{ButtonText}</Text>
-			</ButtonQR>
+			</InvoiceQR>
 		),
 		{
 			notes:
@@ -82,7 +82,7 @@ storiesOf('ButtonQR', module)
 	.add(
 		'payment pending',
 		() => (
-			<ButtonQR
+			<InvoiceQR
 				toAddress={text(
 					'To address',
 					'bitcoincash:pp8skudq3x5hzw8ew7vzsw8tn4k8wxsqsv0lt0mf3g'
@@ -91,7 +91,7 @@ storiesOf('ButtonQR', module)
 				step={'pending'}
 			>
 				<Text>{ButtonText}</Text>
-			</ButtonQR>
+			</InvoiceQR>
 		),
 		{
 			notes: 'Awaiting a confirmation or cancellation of Badger popup',
@@ -100,7 +100,7 @@ storiesOf('ButtonQR', module)
 	.add(
 		'payment complete',
 		() => (
-			<ButtonQR
+			<InvoiceQR
 				toAddress={text(
 					'To address',
 					'bitcoincash:pp8skudq3x5hzw8ew7vzsw8tn4k8wxsqsv0lt0mf3g'
@@ -109,7 +109,7 @@ storiesOf('ButtonQR', module)
 				step={'complete'}
 			>
 				<Text>{ButtonText}</Text>
-			</ButtonQR>
+			</InvoiceQR>
 		),
 		{
 			notes: 'Payment received, at least on the front-end',
@@ -118,7 +118,7 @@ storiesOf('ButtonQR', module)
 	.add(
 		'login prompt',
 		() => (
-			<ButtonQR
+			<InvoiceQR
 				toAddress={text(
 					'To address',
 					'bitcoincash:pp8skudq3x5hzw8ew7vzsw8tn4k8wxsqsv0lt0mf3g'
@@ -127,7 +127,7 @@ storiesOf('ButtonQR', module)
 				step={'login'}
 			>
 				<Text>{ButtonText}</Text>
-			</ButtonQR>
+			</InvoiceQR>
 		),
 		{
 			notes: 'user not logged in, prompt to login',
@@ -136,7 +136,7 @@ storiesOf('ButtonQR', module)
 	.add(
 		'install prompt',
 		() => (
-			<ButtonQR
+			<InvoiceQR
 				toAddress={text(
 					'To address',
 					'bitcoincash:pp8skudq3x5hzw8ew7vzsw8tn4k8wxsqsv0lt0mf3g'
@@ -145,7 +145,7 @@ storiesOf('ButtonQR', module)
 				step={'install'}
 			>
 				<Text>{ButtonText}</Text>
-			</ButtonQR>
+			</InvoiceQR>
 		),
 		{
 			notes: 'Badger plugin not installed, prompt user to install Badger',
@@ -154,7 +154,7 @@ storiesOf('ButtonQR', module)
 	.add(
 		'expired',
 		() => (
-			<ButtonQR
+			<InvoiceQR
 				paymentRequestUrl={text(
 					'Invoice URL',
 					// expired invoice
@@ -163,7 +163,7 @@ storiesOf('ButtonQR', module)
 				step={'expired'}
 			>
 				<Text>{ButtonText}</Text>
-			</ButtonQR>
+			</InvoiceQR>
 		),
 		{
 			notes: 'Shown for an expired BIP70 invoice',

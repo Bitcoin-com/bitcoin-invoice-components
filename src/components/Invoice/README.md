@@ -1,7 +1,13 @@
-# BadgerButton
+# Invoice
 
-Renders a basic BadgerButton to integrate with the Badger wallet.  
-This basic button is ideal for a minimal payment/donation, or if your application wants to control the majority of the payment layout.
+Renders a QR code invoice. Badger integration if badger wallet detected.
+
+Features
+- Invoice countdown with circle progress bar
+- BCH logo QR code
+- Price in BCH
+- Price in USD (or other currency by prop)
+- Copy URI button
 
 ## Example Usage
 

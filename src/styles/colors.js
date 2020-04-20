@@ -12,6 +12,12 @@ const colors = {
 	expired500: '#FFBABA',
 	expired700: '#D8000C',
 	bg100: '#ffffff',
+	GhostLight: '#C8CDD8',
+	White: '#FFFFFF',
+	CaribbeanGreen: '#0AC18E',
+	InvoiceGreen: '#00C48B',
+	Comet: '#49505F',
+	VulcanLight: '#6B717E',
 };
 
 export default colors;
