@@ -1,7 +1,7 @@
 {
   "name": "bitcoin-invoice-components",
-  "version": "0.15.0",
-  "description": "Integrate the Badger Wallet into your React app with ease.",
+  "version": "0.16.0",
+  "description": "Integrate bip70 invoices into your react app",
   "main": "dist/badger-components.js",
   "scripts": {
     "test": "webpack --mode=development",
@@ -25,12 +25,12 @@
     "badger button",
     "bch payment"
   ],
-  "author": "Peter <peter@bitcoin.com>",
+  "author": "Joey <joey@bitcoin.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bitcoin-com/badger-components-react/issues"
+    "url": "https://github.com/bitcoin-com/bitcoin-invoice-components/issues"
   },
-  "homepage": "https://github.com/bitcoin-com/badger-components-react#readme",
+  "homepage": "https://github.com/bitcoin-com/bitcoin-invoice-components#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",

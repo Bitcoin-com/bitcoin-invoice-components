@@ -1,5 +1,8 @@
 # Changelog - Badger Components React
 
+## 0.16.0 (April 20, 2020)
+* NPM-appropriate docs
+
 ## 0.15.0 (April 20, 2020)
 * Removed all legacy Badger components, invoice components will only be for BIP70
 * Corrected bug in QR code URI for invoices
