@@ -4,6 +4,7 @@ import * as React from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
 import QRCode from 'qrcode.react';
+import Lottie from 'lottie-react-web';
 
 import { type ButtonStates } from '../../hoc/BadgerBase';
 import colors from '../../styles/colors';
@@ -13,6 +14,7 @@ import slpLogo from '../../images/slp-logo-2.png';
 import CheckSVG from '../../images/CheckSVG';
 import XSVG from '../../images/XSVG';
 import LoadSVG from '../../images/LoadSVG';
+import InvoicePaid from '../../images/InvoicePaid.json';
 
 import Text from '../Text';
 
@@ -74,6 +76,18 @@ const ExpiredCover = styled.div`
 	border-radius: 5px;
 	border: 1px solid ${colors.expired700};
 	background-color: ${colors.expired500};
+`;
+
+const PaidCover = styled.div`
+	${cover};
+	flex-direction: column;
+	color: ${colors.InvoiceGreen}
+	background-color: #fff;
+`;
+const PaidText = styled.p`
+	font-size: 20px;
+	font-weight: bold;
+	margin: 0;
 `;
 
 const spinAnimation = keyframes`
@@ -167,9 +181,14 @@ class InvoiceQR extends React.PureComponent<Props> {
 						</PendingCover>
 					)}
 					{isComplete && (
-						<CompleteCover>
-							<CheckSVG />
-						</CompleteCover>
+						<PaidCover>
+							<Lottie
+								options={{
+									animationData: InvoicePaid,
+								}}
+							/>
+							<PaidText>Payment Complete</PaidText>
+						</PaidCover>
 					)}
 					{isExpired && (
 						<ExpiredCover>

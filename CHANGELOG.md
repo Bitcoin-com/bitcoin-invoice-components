@@ -1,4 +1,6 @@
 # Changelog - Badger Components React
+## 0.17.0 (April 21, 2020)
+* Adding animation for paid invoice
 
 ## 0.16.0 (April 20, 2020)
 * NPM-appropriate docs
