@@ -47,7 +47,7 @@ const cover = css`
 	position: absolute;
 	border-radius: 0 0 5px 5px;
 	top: 0;
-	bottom: 0;
+	bottom: 9px;
 	right: 0;
 	left: 0;
 	font-size: 28px;
@@ -59,9 +59,9 @@ const cover = css`
 
 const PendingCover = styled.div`
 	${cover};
-	border: 1px solid ${colors.pending700};
+	border: 1px solid ${colors.CaribbeanGreen};
 	border-radius: 5px;
-	background-color: ${colors.pending500};
+	background-color: ${colors.CaribbeanGreen};
 `;
 
 const CompleteCover = styled.div`
@@ -81,13 +81,15 @@ const ExpiredCover = styled.div`
 const PaidCover = styled.div`
 	${cover};
 	flex-direction: column;
-	color: ${colors.InvoiceGreen}
+	color: ${colors.InvoiceGreen};
 	background-color: #fff;
 `;
+
 const PaidText = styled.p`
 	font-size: 20px;
 	font-weight: bold;
-	margin: 0;
+	color: ${colors.InvoiceGreen};
+	margin: 0px;
 `;
 
 const spinAnimation = keyframes`
@@ -144,7 +146,7 @@ class InvoiceQR extends React.PureComponent<Props> {
 			coinSymbol,
 		} = this.props;
 
-		const widthQR = sizeQR >= 200 ? sizeQR : 200; // Minimum width 200
+		const widthQR = sizeQR >= 75 ? sizeQR : 75; // Minimum width 75
 
 		// QR code source
 		const uriBase = toAddress;
@@ -165,7 +167,7 @@ class InvoiceQR extends React.PureComponent<Props> {
 		const isLogin = step === 'login';
 		const isInstall = step === 'install';
 
-		let logoSize = Math.round(sizeQR);
+		let logoSize = Math.round((42 / 200) * sizeQR);
 		if (logoSize > 66) {
 			logoSize = 66;
 		}
@@ -185,6 +187,7 @@ class InvoiceQR extends React.PureComponent<Props> {
 							<Lottie
 								options={{
 									animationData: InvoicePaid,
+									loop: false,
 								}}
 							/>
 							<PaidText>Payment Complete</PaidText>
@@ -198,26 +201,25 @@ class InvoiceQR extends React.PureComponent<Props> {
 
 					<QRCodeWrapper>
 						<DesktopCover style={{ width: widthQR, height: widthQR + 4 }} />
-						<a href={uri}>
-							{coinSymbol === 'BCH' ? (
-								<QRCode
-									value={uri}
-									size={widthQR}
-									renderAs={'svg'}
-									level="M"
-									imageSettings={{
-										src: bchLogo,
-										x: null,
-										y: null,
-										height: logoSize,
-										width: logoSize,
-										excavate: false,
-									}}
-								/>
-							) : (
-								<QRCode value={uri} size={widthQR} renderAs={'svg'} />
-							)}
-						</a>
+
+						{coinSymbol === 'BCH' ? (
+							<QRCode
+								value={uri}
+								size={widthQR}
+								renderAs={'svg'}
+								level="M"
+								imageSettings={{
+									src: bchLogo,
+									x: null,
+									y: null,
+									height: logoSize,
+									width: logoSize,
+									excavate: false,
+								}}
+							/>
+						) : (
+							<QRCode value={uri} size={widthQR} renderAs={'svg'} />
+						)}
 					</QRCodeWrapper>
 				</Main>
 			</Wrapper>

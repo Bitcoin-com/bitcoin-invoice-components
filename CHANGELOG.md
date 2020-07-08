@@ -1,4 +1,21 @@
 # Changelog - Badger Components React
+## 0.22.0 (July 8, 2020) 
+* Updated styling of pending to match QR size
+* Disable 'Pay' button after invoice is complete
+
+## 0.21.0 (July 7, 2020)
+* bitcoincom-link support to pay invoices from wallet webview
+* Do not update BCH prices for invoices; price was set on invoice creation
+
+## 0.20.0 (June 18, 2020)
+* Display currency code if supplied as prop, otherwise assume USD
+
+## 0.19.0 (April 21, 2020)
+* CSS adjustments
+
+## 0.18.0 (April 21, 2020)
+* CSS and looping fixes for animation
+
 ## 0.17.0 (April 21, 2020)
 * Adding animation for paid invoice
 

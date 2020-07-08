@@ -1,6 +1,6 @@
 {
   "name": "bitcoin-invoice-components",
-  "version": "0.17.0",
+  "version": "0.22.0",
   "description": "Integrate bip70 invoices into your react app",
   "main": "dist/badger-components.js",
   "scripts": {
