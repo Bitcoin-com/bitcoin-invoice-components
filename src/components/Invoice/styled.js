@@ -44,3 +44,27 @@ export const CopyButton = styled.button`
 	font-size: 12px;
 	cursor: pointer;
 `;
+
+export const LinkButton = styled.button`
+	color: ${colors.CaribbeanGreen};
+	background-color: white;
+	border: 2px solid ${colors.CaribbeanGreen};
+	border-radius: 21px;
+	display: block;
+	width: 100%;
+	padding: 12px;
+	margin: 12px 0;
+	font-size: 12px;
+	cursor: pointer;
+`;
+export const CompleteButton = styled.button`
+	color: ${colors.VulcanLight};
+	background-color: ${colors.GhostLight};
+	border: 2px solid ${colors.VulcanLight};
+	border-radius: 21px;
+	display: block;
+	width: 100%;
+	padding: 12px;
+	margin: 12px 0;
+	font-size: 12px;
+`;

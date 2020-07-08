@@ -33,6 +33,9 @@ storiesOf('Invoice', module)
 					//'https://yourInvoiceUrlHere.com/String'
 					'https://pay.bitcoin.com/i/EW7ctYT2L88sY9RVfftmXQ'
 				)}
+				step={text('step', 'fresh')}
+				copyUri={boolean('copyUri', true)}
+				linkAvailable={boolean('linkAvailable', true)}
 				successFn={() => console.log('success example function called')}
 				failFn={() => console.log('fail example function called')}
 				sizeQR={number('QR Code Size', 200)}
@@ -57,6 +60,7 @@ storiesOf('Invoice', module)
 					console.log('BIP70 Invoice is expired or the URL is invalid')
 				}
 				copyUri={boolean('copyUri', true)}
+				linkAvailable={boolean('linkAvailable', true)}
 				sizeQR={number('QR Code Size', 200)}
 			/>
 		),
@@ -79,6 +83,7 @@ storiesOf('Invoice', module)
 					console.log('BIP70 Invoice is expired or the URL is invalid')
 				}
 				copyUri={boolean('copyUri', true)}
+				linkAvailable={boolean('linkAvailable', true)}
 				sizeQR={number('QR Code Size', 200)}
 			/>
 		),

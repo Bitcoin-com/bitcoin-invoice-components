@@ -27,6 +27,8 @@ import {
 	PriceBCH,
 	PriceFiat,
 	CopyButton,
+	LinkButton,
+	CompleteButton,
 } from './styled';
 
 // Invoice Props
@@ -42,7 +44,8 @@ type Props = BadgerBaseProps & {
 	handleClick: Function,
 	step: ButtonStates,
 
-	copyUri?: string,
+	copyUri?: Boolean,
+	linkAvailable?: Boolean,
 	sizeQR: ?number,
 };
 
@@ -86,9 +89,11 @@ class Invoice extends React.PureComponent<Props, State> {
 			invoiceFiat,
 
 			copyUri,
+			linkAvailable,
 			sizeQR,
 		} = this.props;
 		const { uriCopied } = this.state;
+		const isComplete = step === 'complete';
 
 		return (
 			<React.Fragment>
@@ -96,12 +101,11 @@ class Invoice extends React.PureComponent<Props, State> {
 					<QRWrapper>
 						<PriceBCH>{formatAmount(amount, coinDecimals)} BCH</PriceBCH>
 						<PriceFiat>
-							{getCurrencyPreSymbol(currency)} {formatPriceDisplay(invoiceFiat)}
+							{getCurrencyPreSymbol(currency)} {formatPriceDisplay(invoiceFiat)}{' '}
+							{currency}
 						</PriceFiat>
 
 						<InvoiceQR
-							amountSatoshis={amount}
-							toAddress={to}
 							onClick={handleClick}
 							step={step}
 							paymentRequestUrl={paymentRequestUrl}
@@ -114,6 +118,15 @@ class Invoice extends React.PureComponent<Props, State> {
 						)}
 					</QRWrapper>
 					<ButtonWrapper>
+						{linkAvailable && (
+							<>
+								{isComplete ? (
+									<CompleteButton>PAID</CompleteButton>
+								) : (
+									<LinkButton onClick={handleClick}>PAY</LinkButton>
+								)}
+							</>
+						)}
 						{copyUri && (
 							<CopyToClipboard
 								text={`bitcoincash:?r=${paymentRequestUrl}`}

@@ -318,12 +318,16 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 			intervalInvoicePrice && clearInterval(intervalInvoicePrice);
 
 			this.updateInvoiceFiat();
+			// Make this 15 min, which is the timeout of an invoice
+			// You don't want to update this for an invoice
 			const intervalInvoicePriceNext = setInterval(
 				() => this.updateInvoiceFiat(),
-				PRICE_UPDATE_INTERVAL
+				15 * PRICE_UPDATE_INTERVAL
 			);
 
-			this.setState({ intervalInvoicePrice: intervalInvoicePriceNext });
+			this.setState({
+				intervalInvoicePrice: intervalInvoicePriceNext,
+			});
 		};
 
 		setupWatchAddress = async () => {

@@ -19,6 +19,8 @@ Badger buttons and badges get wrapped in this Higher Order Component (HOC), whic
 
 if props `currency` and `price` are entered, the real world fiat currency to BCH price will be computed and automatically set
 
+Note: for invoices, price does not update for the duration of the invoice
+
 ### Token Pricing
 
 if props `coinType` and `amount` are entered that amount of the chosen `coinType` token/coin will be used as payment.
