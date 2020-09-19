@@ -80,6 +80,7 @@ type State = {
 	coinDecimals: ?number,
 	unconfirmedCount: ?number,
 	invoiceInfo: ?Object,
+	invoiceSendingTokenId: ?string,
 	invoiceTimeLeftSeconds: ?number,
 
 	intervalPrice: ?IntervalID,
@@ -114,6 +115,7 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 			unconfirmedCount: null,
 			invoiceInfo: {},
 			invoiceFiat: null,
+			invoiceSendingTokenId: null,
 			invoiceTimeLeftSeconds: null,
 
 			intervalPrice: null,
@@ -189,6 +191,8 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 			}
 
 			const walletProviderStatus = getWalletProviderStatus();
+			console.info(`walletProviderStatus:`);
+			console.info(walletProviderStatus);
 
 			if (
 				typeof window === `undefined` ||
@@ -212,6 +216,7 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 			if (paymentRequestUrl) {
 				this.setState({ step: 'pending' });
 				console.info('Badger payInvoice begin', paymentRequestUrl);
+				console.info(`paymentRequestUrl: ${paymentRequestUrl}`);
 				payInvoice({ url: paymentRequestUrl })
 					.then(({ memo }) => {
 						console.info('Badger send success:', memo);
@@ -220,6 +225,9 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 					})
 					.catch((err) => {
 						console.info('Badger send cancel', err);
+						console.info('More debug:');
+						console.info(err);
+						console.info(JSON.stringify(err));
 						failFn && failFn(err);
 						this.setState({ step: 'fresh' });
 					});
@@ -380,6 +388,66 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 				//console.log(`invoiceInfo:`);
 				//console.log(invoiceInfo);
 
+				// get the slp info from this msg, do not use  a prop
+				// a prop could be intentionally or accidentally set in a misleading way
+
+				// Sample output of invoiceInfo
+				// SLP sending ID dd84ca78db4d617221b58eabc6667af8fe2f7eadbfcc213d35be9f1b419beb8d
+				/*
+				{
+					"network": "main",
+					"currency": "SLP",
+					"outputs": [
+						{
+							"script": "6a04534c500001010453454e4420dd84ca78db4d617221b58eabc6667af8fe2f7eadbfcc213d35be9f1b419beb8d08000000000000000e08000000000000000e08000000000000000e08000000000000000e",
+							"amount": 0,
+							"token_id": "dd84ca78db4d617221b58eabc6667af8fe2f7eadbfcc213d35be9f1b419beb8d",
+							"send_amounts": [
+								14,
+								14,
+								14,
+								14
+							],
+							"type": "SLP"
+						},
+						{
+							"script": "76a914f9273dc314f04338e08b5e6b272bacba9182f6d688ac",
+							"amount": 546,
+							"address": "1PiQGJBLgWREnixVU3aqjjCKBxUo9PkykD",
+							"type": "P2PKH"
+						},
+						{
+							"script": "76a91445028e7b2b7c0253a1b4e983a53da8b5a85ffe4188ac",
+							"amount": 546,
+							"address": "17HtgsScZroC6YJ7zmHUNwcNTnNCTTYSbz",
+							"type": "P2PKH"
+						},
+						{
+							"script": "76a914ee26517e2e55d4e2236f178e3db1029e8ffb9f8f88ac",
+							"amount": 546,
+							"address": "1NiDj4Upuv2JdLv5nEhkUZvFtE3aSG8xMK",
+							"type": "P2PKH"
+						},
+						{
+							"script": "76a9142dcb2582d1af767f81b23bae5a4c89990510b23788ac",
+							"amount": 546,
+							"address": "15B8mW2poTaLc7enxdaxTcoqyyQ27nNBcT",
+							"type": "P2PKH"
+						}
+					],
+					"time": "2020-08-18T17:30:23.054Z",
+					"expires": "2020-08-18T17:45:23.054Z",
+					"status": "open",
+					"merchantId": "00000000-0000-0000-0000-000000000000",
+					"memo": "Paying 55 SLP Token ID 'dd84ca78db4d617221b58eabc6667af8fe2f7eadbfcc213d35be9f1b419beb8d' aka 'Thoughts and Prayers' to holders of SLP Token ID '3190a180f7424cd41cf92a807ae4e0da522ba6309baed6b20a56da2b40217098' aka 'The Four Half-coins of Jin Qua' with a balance of at least 0.07272727272727272 tokens (4 total)",
+					"fiatSymbol": "TAP",
+					"fiatRate": 1,
+					"fiatTotal": 56,
+					"paymentAsset": "TAP",
+					"paymentUrl": "https://pay.bitcoin.com/i/D13vHNEGpQXKx3eQYzBsMV",
+					"paymentId": "D13vHNEGpQXKx3eQYzBsMV"
+				} */
+
 				const invoiceStatus = invoiceInfo.status; // for InvoiceDisplay
 
 				this.setState({ invoiceInfo }, this.setupInvoiceFiat());
@@ -429,6 +497,8 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 
 		setupCoinMeta = async (invoiceInfo = null) => {
 			const { coinType, tokenId, paymentRequestUrl } = this.props;
+			//console.log(`setupCoinMeta called with:`);
+			//console.log(invoiceInfo);
 
 			if (invoiceInfo !== null && invoiceInfo.currency !== 'BCH') {
 				const invoiceTokenId = invoiceInfo.outputs[0].token_id;
@@ -440,6 +510,7 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 					coinSymbol: symbol,
 					coinDecimals: decimals,
 					coinName: name,
+					invoiceSendingTokenId: invoiceTokenId,
 				});
 			} else if (
 				(!paymentRequestUrl && coinType === 'BCH') ||
@@ -606,6 +677,7 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 				coinSymbol,
 				coinName,
 				invoiceInfo,
+				invoiceSendingTokenId,
 				invoiceTimeLeftSeconds,
 				invoiceFiat,
 			} = this.state;
@@ -652,6 +724,7 @@ const BadgerBase = (Wrapped: React.AbstractComponent<any>) => {
 					invoiceInfo={invoiceInfo}
 					invoiceTimeLeftSeconds={invoiceTimeLeftSeconds}
 					invoiceFiat={invoiceFiat}
+					invoiceSendingTokenId={invoiceSendingTokenId}
 				/>
 			);
 		}
