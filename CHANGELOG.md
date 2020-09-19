@@ -1,4 +1,13 @@
 # Changelog - Badger Components React
+
+## 0.24.0 (Sep 19, 2020)
+* Improved fallback image handling for SLP token icons
+
+## 0.23.0 (August 18, 2020)
+* Added support for SLP invoices with `simpleledger:` prefix
+* Added support for SLP token icons if hosted at `tokens.bitcoin.com`
+* SLP info comes from `pay.bitcoin.com` websocket to prevent props over-writing or obscuring the invoice info
+
 ## 0.22.0 (July 8, 2020) 
 * Updated styling of pending to match QR size
 * Disable 'Pay' button after invoice is complete

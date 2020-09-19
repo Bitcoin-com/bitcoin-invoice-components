@@ -2,6 +2,9 @@
 
 import * as React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Img } from 'react-image';
+
+import slpLogo from '../../images/slp-logo-2.png';
 
 import {
 	getCurrencyPreSymbol,
@@ -80,6 +83,8 @@ class Invoice extends React.PureComponent<Props, State> {
 			currency,
 
 			coinSymbol,
+			coinName,
+			coinType,
 			coinDecimals,
 
 			amount,
@@ -87,6 +92,7 @@ class Invoice extends React.PureComponent<Props, State> {
 
 			invoiceTimeLeftSeconds,
 			invoiceFiat,
+			invoiceSendingTokenId,
 
 			copyUri,
 			linkAvailable,
@@ -94,23 +100,45 @@ class Invoice extends React.PureComponent<Props, State> {
 		} = this.props;
 		const { uriCopied } = this.state;
 		const isComplete = step === 'complete';
+		let copyText = `bitcoincash:?r=${paymentRequestUrl}`;
+		let potentialTokenIconUri = ``;
+		if (coinType !== 'BCH') {
+			potentialTokenIconUri = `https://tokens.bitcoin.com/32/${invoiceSendingTokenId}.png`; //${invoiceSendingTokenId}
+			copyText = `simpleledger:?r=${paymentRequestUrl}`;
+			// tokenId for SLP token
+
+			// See if the token icon exists before trying to load it
+			// Note: Brave thinks even existing icons do not exist, TODO
+		}
 
 		return (
 			<React.Fragment>
 				<Wrapper>
 					<QRWrapper>
-						<PriceBCH>{formatAmount(amount, coinDecimals)} BCH</PriceBCH>
-						<PriceFiat>
-							{getCurrencyPreSymbol(currency)} {formatPriceDisplay(invoiceFiat)}{' '}
-							{currency}
-						</PriceFiat>
+						<PriceBCH>
+							{formatAmount(amount, coinDecimals)} {coinSymbol}{' '}
+							<Img
+								style={{ display: 'block', margin: 'auto', width: '32px' }}
+								src={[potentialTokenIconUri, slpLogo]}
+							/>
+						</PriceBCH>
+						{coinSymbol === 'BCH' ? (
+							<PriceFiat>
+								{getCurrencyPreSymbol(currency)}{' '}
+								{formatPriceDisplay(invoiceFiat)} {currency}
+							</PriceFiat>
+						) : (
+							<>
+								<PriceFiat>{coinName}</PriceFiat>
+							</>
+						)}
 
 						<InvoiceQR
 							onClick={handleClick}
 							step={step}
 							paymentRequestUrl={paymentRequestUrl}
 							sizeQR={sizeQR}
-							coinSymbol={coinSymbol}
+							coinType={coinType}
 						></InvoiceQR>
 
 						{invoiceTimeLeftSeconds !== null && (
@@ -128,10 +156,7 @@ class Invoice extends React.PureComponent<Props, State> {
 							</>
 						)}
 						{copyUri && (
-							<CopyToClipboard
-								text={`bitcoincash:?r=${paymentRequestUrl}`}
-								onCopy={this.handleCopiedUri}
-							>
+							<CopyToClipboard text={copyText} onCopy={this.handleCopiedUri}>
 								<CopyButton>{uriCopied ? 'URI COPIED' : 'COPY URI'}</CopyButton>
 							</CopyToClipboard>
 						)}

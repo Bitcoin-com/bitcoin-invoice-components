@@ -125,7 +125,7 @@ type Props = {
 	amountSatoshis: ?number,
 	sizeQR: number,
 	paymentRequestUrl: string,
-	coinSymbol: string,
+	coinType: string,
 };
 
 class InvoiceQR extends React.PureComponent<Props> {
@@ -143,7 +143,7 @@ class InvoiceQR extends React.PureComponent<Props> {
 			amountSatoshis,
 			sizeQR,
 			paymentRequestUrl,
-			coinSymbol,
+			coinType,
 		} = this.props;
 
 		const widthQR = sizeQR >= 75 ? sizeQR : 75; // Minimum width 75
@@ -156,7 +156,11 @@ class InvoiceQR extends React.PureComponent<Props> {
 			: uriBase;
 
 		if (paymentRequestUrl && paymentRequestUrl.length > 0) {
-			uri = `bitcoincash:?r=${paymentRequestUrl}`;
+			if (coinType === 'BCH') {
+				uri = `bitcoincash:?r=${paymentRequestUrl}`;
+			} else {
+				uri = `simpleledger:?r=${paymentRequestUrl}`;
+			}
 		} else uri = `bitcoincash:?r=https://pleaseEnterBip70Url/`;
 
 		// State booleans
@@ -202,24 +206,20 @@ class InvoiceQR extends React.PureComponent<Props> {
 					<QRCodeWrapper>
 						<DesktopCover style={{ width: widthQR, height: widthQR + 4 }} />
 
-						{coinSymbol === 'BCH' ? (
-							<QRCode
-								value={uri}
-								size={widthQR}
-								renderAs={'svg'}
-								level="M"
-								imageSettings={{
-									src: bchLogo,
-									x: null,
-									y: null,
-									height: logoSize,
-									width: logoSize,
-									excavate: false,
-								}}
-							/>
-						) : (
-							<QRCode value={uri} size={widthQR} renderAs={'svg'} />
-						)}
+						<QRCode
+							value={uri}
+							size={widthQR}
+							renderAs={'svg'}
+							level="M"
+							imageSettings={{
+								src: coinType === 'BCH' ? bchLogo : slpLogo,
+								x: null,
+								y: null,
+								height: logoSize,
+								width: logoSize,
+								excavate: false,
+							}}
+						/>
 					</QRCodeWrapper>
 				</Main>
 			</Wrapper>
